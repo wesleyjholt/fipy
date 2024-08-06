@@ -21,13 +21,16 @@ _desired_solver = _parseSolver()
 if _desired_solver is None and 'FIPY_SOLVERS' in os.environ:
     _desired_solver = os.environ['FIPY_SOLVERS'].lower()
 del os
-    
-try:
-    from mpi4py import MPI
-    _Nproc = MPI.COMM_WORLD.size
-    del MPI
-except ImportError:
-    _Nproc = 1
+
+# I removed the check for mpi4py in an attempt to force
+# solvers to run in serial mode.
+# try:
+#     from mpi4py import MPI
+#     _Nproc = MPI.COMM_WORLD.size
+#     del MPI
+# except ImportError:
+#     _Nproc = 1
+_Nproc = 1
 
 _exceptions = []
 
